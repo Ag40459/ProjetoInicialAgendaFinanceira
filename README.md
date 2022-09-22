@@ -1,1 +1,0 @@
-Com essa aplicação você poderá realizar seu cadastro de usuário, logar em um ambiente único e seguro. Será possível cadastrar sua movimentação de entradas e saídas diária, definir categorias, alterar perfil de usuário. Também conta com um resumo de seu extrato financeiro para facilitar na hora do levantamento de gastos.
