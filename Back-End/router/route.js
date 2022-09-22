@@ -5,8 +5,6 @@ const { registerUser, login, userDetail, updateUser } = require('../controller/u
 const authenticateLogin = require('../intermediary/authenticateLogin');
 const route = express()
 
-
-
 route.post('/usuario', registerUser);
 route.post('/login', login);
 route.use(authenticateLogin);
@@ -18,6 +16,6 @@ route.get('/transacao/:id', detailTransactionsId);
 route.post('/transacao', registerTransaction);
 route.put('/transacao/:id', updateTransaction);
 route.delete('/transacao/:id', deleteTransaction)
-route.get('/transacao/extrato', extractTransaction);
+route.get('/transaca/extrato', extractTransaction);
 
 module.exports = route; 

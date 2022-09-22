@@ -1,0 +1,121 @@
+h1 {
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #000000
+}
+
+form {
+    position: relative;
+    display: flex;
+    width: 490px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    color: #484848;
+}
+
+input {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #000000;
+    height: 63px;
+}
+
+form button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-left: 130px;
+    background-color: #7978D9;
+    border-radius: 5px;
+    color: #fff;
+    height: 40px;
+    width: 236px;
+}
+
+form strong {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 55px;
+    left: 0px;
+}
+
+.modal_addRecord {
+    display: flex;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    padding-top: 25px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.card_modal_addRecord_title {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    top: 10px;
+}
+
+.card_modal_addRecord {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 60px;
+    height: 800px;
+    width: 600px;
+    background-color: #fff;
+    border-radius: 20px;
+    gap: 40px;
+}
+
+.card_modal_addRecord img {
+    cursor: pointer;
+}
+
+.select_type {
+    display: flex;
+    height: 60px;
+    width: 490px;
+}
+
+.select_type button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select_type_prohibited {
+    border-radius: 5px 5px 5px 5px;
+    height: 45px;
+    width: 245px;
+    color: #fff;
+    background-color: #3A9FF1;
+}
+
+.select_type_exit {
+    border-radius: 5px 5px 5px 5px;
+    height: 45px;
+    width: 245px;
+    color: #fff;
+    background-color: #B9B9B9;
+}

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const route = require('./router/route');
@@ -8,4 +9,4 @@ app.use(express.json());
 app.use(route);
 
 
-app.listen(3000);
+app.listen(3000, () => { console.log(process.env.AGENOR); });

@@ -1,0 +1,134 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.container_aside_login {
+    display: flex;
+}
+
+.logo {
+    margin-bottom: 200px;
+}
+
+.container_aside,
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 50vw;
+}
+
+.container_aside h1 {
+    font-family: Rubik;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 62px;
+    text-align: left;
+    color: #fff;
+}
+
+.container_aside p {
+    font-family: Rubik;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 33px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 33px;
+    color: #fff;
+}
+
+.container_aside button {
+    background: #7978D9;
+    height: 52px;
+    width: 284px;
+    border-radius: 5px;
+    color: #fff;
+    font-family: Rubik;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    text-align: center;
+    margin-top: 43px;
+    margin-right: 310px;
+    cursor: pointer;
+}
+
+.container_aside button:hover {
+    opacity: 0.9;
+}
+
+.container_aside span {
+    color: #7978D9;
+}
+
+
+.card_form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 513px;
+    height: 535px;
+    border: 1px solid lightgrey;
+    background-color: #fff;
+}
+
+.card_form h1 {
+    font-family: Rubik;
+    font-size: 28px;
+    font-weight: 500;
+    color: #7978D9;
+    margin-bottom: 48px;
+}
+
+.card_form_labelInput {
+    display: flex;
+    gap: 10px;
+}
+
+
+.card_form input {
+    height: 63px;
+    width: 449px;
+    margin-left: 10px;
+    margin-bottom: 41px;
+    border-radius: 5px;
+}
+
+.card_form label {
+    display: flex;
+    margin-bottom: 10px;
+    color: #484848;
+    margin-left: 10px;
+    font-family: Rubik;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.card_form button {
+    all: unset;
+    height: 52px;
+    width: 449px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7978D9;
+    color: #fff;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.card_form strong {
+    position: absolute;
+    bottom: 135px;
+}

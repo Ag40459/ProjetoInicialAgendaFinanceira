@@ -2,17 +2,23 @@ const pool = require("../connection");
 const validateExistTransaction = require('../functions/validateExistTransaction');
 
 const listTransactions = async (req, res) => {
-    const list = await pool.query('select * from transacoes where usuario_id=$1', [req.usuario.id]);
-    // let mirror = {};
+    const { filtro } = req.query;
+    try {
+        const query = "select t.*, c.descricao as categoria_nome from transacoes t left join categorias c on t.categoria_id = c.id where t.usuario_id = $1"
+        const queryFiltro = query + " and c.descricao ilike any ($2)"
+        if (!filtro) {
+            const list = await pool.query(query, [req.usuario.id]);
+            return res.json(list.rows)
+        }
+        filtro.map((item) => { `%item%` })
+        const { rows } = await pool.query(queryFiltro, [req.usuario.id, filtro
+        ]);
+        return res.status(200).json(rows);
 
-    // list.rows.map((select) => {
-    //     mirror =
-    //         { ...select, categoria_nome: select.descricao }
+    } catch (error) {
+        return res.status(500).json({ mensage: 'Erro Interno do Sistema.' });
+    }
 
-    // })
-    // console.log(mirror);
-    res.json(list.rows)
-    // ADICIONAR O NOME DA CATEGORIA NO RESULTADO
 }
 
 const detailTransactionsId = async (req, res) => {
@@ -28,7 +34,7 @@ const detailTransactionsId = async (req, res) => {
         res.json(mirror);
 
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({ mensage: 'Erro interno do sistema' });
     }
 }
 
@@ -37,11 +43,11 @@ const registerTransaction = async (req, res) => {
 
     try {
         if (!descricao || !valor || !data || !categoria_id || !tipo) {
-            return res.status(404).json({ mensagem: 'Todos os campos obrigatórios devem ser informados.' });
+            return res.status(404).json({ mensage: 'Todos os campos obrigatórios devem ser informados.' });
         }
         const { rowCount } = await pool.query('select from categorias where id=$1', [categoria_id]);
         if (rowCount < 1) {
-            return res.status(404).json({ mensagem: 'Categoria não Encontrada.' });
+            return res.status(404).json({ mensage: 'Categoria não Encontrada.' });
         };
         if (tipo == "entrada" || tipo == "saida") {
             const categoryName = await pool.query('select descricao from categorias where id=$1', [categoria_id]);
@@ -53,10 +59,10 @@ const registerTransaction = async (req, res) => {
             res.json(mirror);
 
         } else {
-            return res.status(404).json({ mensagem: 'Tipo deve conter "saida" ou "entrada" ' });
+            return res.status(404).json({ mensage: 'Tipo deve conter "saida" ou "entrada" ' });
         }
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro interno do sistema' });
+        return res.status(500).json({ mensage: 'Erro interno do sistema' });
     }
 
 }
@@ -69,52 +75,59 @@ const updateTransaction = async (req, res) => {
         validateExistTransaction(req, res, id);
 
         if (!descricao || !valor || !data || !categoria_id || !tipo) {
-            return res.status(404).json({ mensagem: 'Todos os campos obrigatórios devem ser informados.' });
+            return res.status(404).json({ mensage: 'Todos os campos obrigatórios devem ser informados.' });
         };
         if (!tipo === 'entrada' && !tipo === 'saida') {
-            return res.status(404).json({ mensagem: 'Tipo deve conter "saida" ou "entrada" ' });
+            return res.status(404).json({ mensage: 'Tipo deve conter "saida" ou "entrada" ' });
         };
         await pool.query('update transacoes set tipo=$1, descricao=$2, valor=$3, data=$4, categoria_id=$5, usuario_id=$6  where id=$7 returning *', [tipo, descricao, valor, data, categoria_id, req.usuario.id, id]);
 
         res.json().send
 
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro Interno do Sistema.' });
+        return res.status(500).json({ mensage: 'Erro Interno do Sistema.' });
     }
 
 }
 
 const deleteTransaction = async (req, res) => {
-    const { id } = req.params;
-    validateExistTransaction(req, res, id);
-
-    await pool.query('delete from transacoes where id=$1', [id]);
-
-    res.json().send;
+    try {
+        const { id } = req.params;
+        validateExistTransaction(req, res, id);
+        await pool.query('delete from transacoes where id=$1', [id]);
+        res.json().send;
+    } catch (error) {
+        return res.status(500).json({ mensage: 'Erro Interno do Sistema.' });
+    }
 
 }
 
 const extractTransaction = async (req, res) => {
 
-    const { rows } = await pool.query('select * from transacoes where usuario_id=$1', [req.usuario.id]);
+    try {
+        const { rows } = await pool.query('select * from transacoes where usuario_id=$1', [req.usuario.id]);
 
-    const entrada = rows.filter((select) => {
-        return select.tipo == "entrada";
-    });
-    const saida = rows.filter((select) => {
-        return select.tipo == "saida";
-    })
-    let totalSaida = 0;
-    let totalEntrada = 0;
-    entrada.map((select) => {
-        select.valor
-        totalEntrada = totalEntrada + select.valor;
-    });
-    saida.map((select) => {
-        select.valor
-        totalSaida = totalSaida + select.valor;
-    });
-    res.json({ totalEntrada, totalSaida });
+        const entrada = rows.filter((select) => {
+            return select.tipo == "entrada";
+        });
+        const saida = rows.filter((select) => {
+            return select.tipo == "saida";
+        })
+        let totalSaida = 0;
+        let totalEntrada = 0;
+        entrada.map((select) => {
+            select.valor
+            totalEntrada = totalEntrada + select.valor;
+        });
+        saida.map((select) => {
+            select.valor
+            totalSaida = totalSaida + select.valor;
+        });
+        res.json({ totalEntrada, totalSaida });
+    } catch (error) {
+        return res.status(500).json({ mensage: 'Erro Interno do Sistema.' });
+    }
+
 }
 
 module.exports = {
